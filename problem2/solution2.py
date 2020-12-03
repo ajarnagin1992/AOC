@@ -4,13 +4,14 @@ import re
 path = pathlib.Path(__file__).parent.absolute().__str__() + r'\\input'
 f = open(path)
 l = list(f)
+l = [r.rstrip('\n') for r in l]
 f.close()
 
 #Part 1
 validcounter = 0
 for i in range(len(l)):
     l[i] = list(re.split(r"[\-:\s]+",l[i]))
-    x,y,rule,password,junk = l[i] #Can't figure out why preceeding regex split leaves an empty string in the resulting list, using junk var as hacky workaround
+    x,y,rule,password = l[i] 
     x = int(x)
     y = int(y)
     
@@ -23,8 +24,7 @@ print(validcounter)
 #Part 2
 validcounter = 0
 for i in range(len(l)):
-    x,y,rule,password,junk = l[i] #Can't figure out why preceeding regex split leaves an empty string in the resulting list, using junk var as hacky workaround
-    x = int(x) - 1
+    x,y,rule,password,junk = l[i]
     y = int(y) - 1
     if (password[x] == rule) != (password[y] == rule):
         validcounter += 1
